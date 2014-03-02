@@ -1,0 +1,14 @@
+{
+        "manifest_version": 2,
+        "name": "Everything's coming up Stamos",
+        "version": "0.1",
+        "description": "Replaces images on a webpage with pictures of John Stamos",
+        "content_scripts": 
+        [
+                {
+                        "matches": ["*://*/*"],
+                        "js": ["content_script.js"],
+                        "run_at": "document_end"
+                }
+        ]
+}
