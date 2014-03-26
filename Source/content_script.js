@@ -1,16 +1,19 @@
 var wide = 1;
 var square = 2;
 var tall = 3;
+var stamosLevel = localStorage.getItem("stamosLevel");
 
 function imgFind() {
     var imgs = document.getElementsByTagName("img");
     var imgSrcs = [];
-
+	if(stamosLevel == null) stamosLevel = 3;
     for (var i = 0; i < imgs.length; i++) {
-		var img = imgs[i];
-		var ratio = img.width/img.height;
-		if(ratio > .5 && ratio < 2){
-			img.src = library.get(ratio).src
+		if(randomIntFromInterval(1,9)<=stamosLevel){
+			var img = imgs[i];
+			var ratio = img.width/img.height;
+			if(ratio > .5 && ratio < 2){
+				img.src = library.get(ratio).src
+			}
 		}
     }
 
@@ -52,7 +55,7 @@ function buildLibrary(){
 	library.add(new Image(wide, "http://media2.s-nbcnews.com/j/streams/2013/August/130819/6C8670836-6c8284491-130716-john-stamos.blocks_desktop_small.jpg"));
 	library.add(new Image(tall, "http://blogs.babble.com/famecrawler/files/2010/11/45423PCN_Smile05.jpg"));
 	library.add(new Image(tall, "http://ia.media-imdb.com/images/M/MV5BMTQxOTI1MDcxNV5BMl5BanBnXkFtZTcwMjEwNDgxNw@@._V1_SY317_CR16,0,214,317_.jpg"));
-	library.add(new Image(tall, "http://images6.fanpop.com/image/photos/32800000/John-Stamos-2011-john-stamos-32853878-387-500.jpg"));
+	library.add(new Image(wide, "http://images6.fanpop.com/image/photos/32800000/John-Stamos-john-stamos-32853900-1024-768.png"));
 	library.add(new Image(tall, "http://assets-s3.usmagazine.com/uploads/assets/articles/64632-john-stamos-to-reunite-with-full-house-band-jesse-and-the-rippers-on-jimmy-fallo/1374005728_109418050_john-stamos-467.jpg"));
 	library.add(new Image(square, "http://upload.wikimedia.org/wikipedia/en/c/c9/JohnStamos-ER.jpg"));
 	library.add(new Image(wide, "http://images6.fanpop.com/image/photos/32800000/John-Stamos-john-stamos-32853900-1024-768.png"));
@@ -68,6 +71,22 @@ function getRandom(array){
 	return array[Math.floor(Math.random() * array.length)];
 }
 
+function randomIntFromInterval(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 var library = buildLibrary();
 
 imgFind();
+
+$(document).keydown(function(e){
+	if(e.shiftKey && e.altKey && e.keyCode >= 49 && e.keyCode <= 57){
+		var message = "";
+		if((e.keyCode - 48) == 9) message = "\nHave Mercy";
+		if((e.keyCode - 48) == 5) message = "\nTalk to me";
+		if((e.keyCode - 48) == 1) message = "\nEat Oikos";
+		//console.log("alt shift " + (e.keyCode - 48) + " Pressed");
+		alert("Stamos Level " + (e.keyCode - 48) + message);
+		localStorage.setItem("stamosLevel", (e.keyCode - 48));
+	}
+})
